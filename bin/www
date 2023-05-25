@@ -1,0 +1,37 @@
+#!/usr/bin/env node
+
+/**
+ * Module dependencies.
+ */
+
+var app = require('../app');
+var debug = require('debug')('expressserver:server');
+var https = require('https');
+var fs = require('fs');
+/**
+ * Get port from environment and store in Express.
+ */
+
+
+var secPort=3443;
+/*
+ * Create HTTP server.
+ */
+
+
+var options = {
+  key: fs.readFileSync(__dirname+'/private.key'),
+  cert: fs.readFileSync(__dirname+'/certificate.pem')
+};
+
+var secureServer = https.createServer(options,app);
+/**
+ * Listen on provided port, on all network interfaces.
+ */
+
+
+secureServer.listen(secPort, () => {
+  console.log('Server listening on port ',secPort);
+});
+
+
